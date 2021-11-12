@@ -1,4 +1,5 @@
 from typing import Dict, List
+from seq_three import SequenceThree
 
 from sequence import Sequence
 from seq_one import SequenceOne
@@ -14,6 +15,7 @@ class SequenceFactory:
     seq_map = {
         SequenceOne.__name__: SequenceOne,
         SequenceTwo.__name__: SequenceTwo,
+        SequenceThree.__name__: SequenceThree,
     }
 
     def get_sequences(

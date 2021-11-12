@@ -76,17 +76,33 @@ def bad_factory_creation():
             "type": "NotThere",
         },
     }
-    ss = sf.get_sequences(bad_conf, errors)
-    print(ss)
-    for s in ss:
-        print(s.name, s.config)
-    print(errors)
+    try:
+        ss = sf.get_sequences(bad_conf, errors)
+        print(ss)
+        for s in ss:
+            print(s.name, s.config)
+        print(errors)
+    except Exception as e:
+        print(e)
 
+
+def sequence_three_not_instantiable():
+    seq_dict = {
+        "Three": {
+            "type": "SequenceThree",
+            "config": {},
+        }
+    }
+    errors = []
+    ss = sf.get_sequences(seq_dict, errors)
+    for s in ss:
+        print(s)
 
 def main():
     importlib_creation()
     clean_factory_creation()
     bad_factory_creation()
+    sequence_three_not_instantiable()
 
 
 if __name__ == "__main__":
