@@ -1,4 +1,5 @@
 import importlib
+from sequence import Sequence
 
 from sequence_factory import SequenceFactory
 
@@ -37,9 +38,12 @@ def clean_factory_creation():
     ss = sf.get_sequences(conf, errors)
     print(ss)
     for s in ss:
+        print(type(s))
+        print(isinstance(s, Sequence))
         print(s.name, s.config)
         s.sequence()
     print(errors)
+    print(Sequence.__subclasses__())
 
 
 def bad_factory_creation():
@@ -97,6 +101,7 @@ def sequence_three_not_instantiable():
     ss = sf.get_sequences(seq_dict, errors)
     for s in ss:
         print(s)
+
 
 def main():
     importlib_creation()

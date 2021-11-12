@@ -1,9 +1,6 @@
 from typing import Dict, List
-from seq_three import SequenceThree
 
 from sequence import Sequence
-from seq_one import SequenceOne
-from seq_two import SequenceTwo
 
 
 class FailedToCreateSequencesException(Exception):
@@ -12,11 +9,12 @@ class FailedToCreateSequencesException(Exception):
 
 
 class SequenceFactory:
-    seq_map = {
-        SequenceOne.__name__: SequenceOne,
-        SequenceTwo.__name__: SequenceTwo,
-        SequenceThree.__name__: SequenceThree,
-    }
+    def __init__(self) -> None:
+        sequence_subclasses = Sequence.__subclasses__()
+        seq_map = {}
+        for sub in sequence_subclasses:
+            seq_map[sub.__name__] = sub
+        self.seq_map = seq_map
 
     def get_sequences(
         self, requested_sequences: Dict, errors: List[str]
