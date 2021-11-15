@@ -1,13 +1,11 @@
 import importlib
-from sequence import Sequence
-
-from sequence_factory import SequenceFactory
+from sequence import Sequence, SequenceFactory
 
 sf = SequenceFactory()
 
 
 def importlib_creation():
-    ilso_cls = getattr(importlib.import_module("seq_one"), "SequenceOne")
+    ilso_cls = getattr(importlib.import_module("sequence.impls.seq_one"), "SequenceOne")
     ilso = ilso_cls("MyName", {"value": "importlib"})
     print(ilso.name, ilso.config)
 
@@ -35,7 +33,7 @@ def clean_factory_creation():
         },
     }
 
-    ss = sf.get_sequences(conf, errors)
+    ss = sf.create_sequences(conf, errors)
     print(ss)
     for s in ss:
         print(type(s))
@@ -81,7 +79,7 @@ def bad_factory_creation():
         },
     }
     try:
-        ss = sf.get_sequences(bad_conf, errors)
+        ss = sf.create_sequences(bad_conf, errors)
         print(ss)
         for s in ss:
             print(s.name, s.config)
@@ -98,7 +96,7 @@ def sequence_three_not_instantiable():
         }
     }
     errors = []
-    ss = sf.get_sequences(seq_dict, errors)
+    ss = sf.create_sequences(seq_dict, errors)
     for s in ss:
         print(s)
 

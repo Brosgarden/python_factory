@@ -1,6 +1,7 @@
 from typing import Dict, List
 
-from sequence import Sequence
+from sequence.impls import  SequenceOne, SequenceThree, SequenceTwo
+from sequence.abstract_sequence import Sequence
 
 
 class FailedToCreateSequencesException(Exception):
@@ -10,13 +11,13 @@ class FailedToCreateSequencesException(Exception):
 
 class SequenceFactory:
     def __init__(self) -> None:
-        sequence_subclasses = Sequence.__subclasses__()
-        seq_map = {}
-        for sub in sequence_subclasses:
-            seq_map[sub.__name__] = sub
-        self.seq_map = seq_map
+        self.seq_map = {
+            SequenceOne.__name__: SequenceOne,
+            SequenceTwo.__name__: SequenceTwo,
+            SequenceThree.__name__: SequenceThree,
+        }
 
-    def get_sequences(
+    def create_sequences(
         self, requested_sequences: Dict, errors: List[str]
     ) -> List[Sequence]:
         sequences = []
@@ -34,7 +35,7 @@ class SequenceFactory:
                             )
                     else:
                         errors.append(
-                            f"requested_sequence does not have 'config' defined: seq={name, conf}"
+                            f"requested sequence does not have 'config' defined: seq={name, conf}"
                         )
                 else:
                     errors.append(
